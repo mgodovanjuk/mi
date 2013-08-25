@@ -1,0 +1,71 @@
+INHERITANCE.
+CALC-OBJECT: 
+        < IDENTIFIER; 
+           VARIABLE-DECLARATION; 
+         CALC-TYPE: 
+             < REAL-TYPE; INTEGER-TYPE >;
+            CALC-EXPRESSION; 
+         CALC-STATEMENT: 
+                < ASSIGNEMENT; 
+                  PRINT-EXPRESSION
+                 >;
+            CALC-PROGRAM
+       >.
+
+CALC-EXPRESSION: 
+           < INTEGER-CONSTANT; 
+              REAL-CONSTANT; 
+              IDENTIFIER-REF;
+              ADD-EXPRESSION; 
+              SUB-EXPRESSION; 
+              MULT-EXPRESSION;
+              DIV-EXPRESSION  
+            >.
+            SYNTAX. 
+    Start = CALC-PROGRAM.
+    
+    IDENTIFIER::=  identifier-name => symbol ;
+     VARIABLE-DECLARATION::=
+           "var" variable-identifier => identifier 
+                ":" 
+                variable-type => calc-type ; 
+     
+     REAL-TYPE::=    "real" ;
+     INTEGER-TYPE::= "integer" ;
+     INTEGER-CONSTANT::= 
+            integer-value => integer ;
+     
+     REAL-CONSTANT::=    real-value    => real ;
+     IDENTIFIER-REF::=   
+            ID-NAME  => symbol 
+            REF-TO   => identifier ;
+     
+     ADD-EXPRESSION::=  
+            add-arg1 =>calc-expression  "+" 
+            add-arg2 => calc-expression ;
+     
+     SUB-EXPRESSION::=  
+         sub-arg1 => calc-expression "-" 
+         sub-arg2 => calc-expression ;
+     
+     MULT-EXPRESSION::= 
+         mult-arg1 => calc-expression  "*" 
+         mult-arg2=> calc-expression ;
+     
+     DIV-EXPRESSION::=  
+         div-arg1 => calc-expression  "/" 
+         div-arg2 => calc-expression ;
+     
+     ASSIGNEMENT::= 
+          ass-arg1 => identifier-ref  ":=" 
+          ass-arg2 => calc-expression ;
+     
+     PRINT-EXPRESSION::=  "print(" 
+         [Prt-Args => calc-expression] + "," ")" ; 
+     
+     CALC-PROGRAM::= 
+          "program"  prg-name => symbol  
+          [prg-decls => variable-declaration] + ";" 
+          "begin"
+          [prg-stmts => calc-statement] + ";"  
+          "end" ;  
